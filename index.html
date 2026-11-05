@@ -200,9 +200,53 @@ body{padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(max-width:860px){.orbit{inset:-40px -6px}}
 @media(max-width:860px){#hero,.about,.music{grid-template-columns:1fr}.dev{order:-1}.dots{display:none}section{padding:80px 6vw}.fl.b{left:0}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.fd,h1 span{opacity:1;transform:none;filter:none}.cl{width:calc(var(--n)*1ch + 1.5ch)}}
+body.lock{overflow:hidden}body.lock .fd,body.lock h1 span,body.lock .cl,body.lock .dev{animation-play-state:paused}
+#gate{position:fixed;inset:0;z-index:500;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;color:#e6edf3}
+#gate .strips{position:absolute;inset:0;display:flex}
+#gate .strips i{flex:1;background:#04070a;border-right:1px solid rgba(57,255,136,.12);box-shadow:0 8px 30px rgba(57,255,136,.18);transition:transform .85s cubic-bezier(.7,0,.2,1)}
+#gate .strips i.up{transform:translateY(-104%)}
+#gc{position:absolute;inset:0;width:100%;height:100%;opacity:.45;transition:opacity .4s}
+.gbox{position:relative;z-index:2;width:min(580px,92vw);background:#0b1118;border:1px solid #1f2d3a;border-radius:16px;overflow:hidden;box-shadow:0 30px 100px rgba(57,255,136,.14),0 0 0 1px rgba(57,255,136,.08);transition:opacity .35s,transform .35s;animation:gin .9s cubic-bezier(.2,.8,.2,1)}
+@keyframes gin{from{opacity:0;transform:translateY(28px) scale(.96)}}
+.gbox.out{opacity:0;transform:scale(1.07)}.gbox.shake{animation:shake .4s}
+@keyframes shake{20%{transform:translateX(-10px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+#gate .wh{background:#0f1720;border-color:#1f2d3a;color:#8b949e}
+#gate .wh i{width:11px;height:11px;border-radius:50%;background:#ff7b72;display:inline-block}#gate .wh i:nth-child(2){background:#e3b341}#gate .wh i:nth-child(3){background:#7ee787}
+#gate .k{color:#ff7b72}#gate .f{color:#d2a8ff}#gate .s{color:#7ee787}#gate .n{color:#ffa657}#gate .p{color:#8b949e}#gate .cm{color:#6b7c8c}
+.gb{padding:22px 24px 18px}
+.gcode{font:13.5px/1.7 'JetBrains Mono',monospace;background:#070b10;border:1px solid #1a2530;border-radius:10px;padding:14px 16px;margin:0 0 18px;overflow-x:auto;white-space:pre;color:#c9d1d9}
+.gh{font:700 24px 'Space Grotesk',sans-serif;margin:0 0 14px;color:#e6edf3}
+.chk{display:flex;align-items:center;gap:16px;width:100%;padding:16px 18px;background:#0f1720;border:1px solid #243342;border-radius:12px;color:#e6edf3;font:500 17px 'Space Grotesk',sans-serif;cursor:pointer;transition:.25s;text-align:left}
+.chk:hover{border-color:#39ff88;box-shadow:0 0 24px rgba(57,255,136,.18)}
+.chk .box{width:26px;height:26px;border:2px solid #4a5a6a;border-radius:6px;display:grid;place-items:center;flex:none;transition:.3s;color:#04140a;font-weight:700}
+.chk.busy .box{border-color:#39ff88;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
+.chk.ok .box{background:#39ff88;border-color:#39ff88;border-radius:6px}.chk.ok .box::after{content:'✓'}
+.glog{font:13px/1.75 'JetBrains Mono',monospace;color:#8b949e;margin-top:14px}.glog p{margin:0;opacity:0;animation:fi .3s forwards}.glog .ok{color:#39ff88}
+.gq{margin:18px 0 10px;color:#c9d1d9;font:500 15px 'Space Grotesk',sans-serif}
+.qrow{display:flex;gap:10px}
+.qrow input{flex:1;min-width:0;background:#070b10;border:1px solid #243342;border-radius:10px;color:#e6edf3;padding:12px 14px;font:15px 'JetBrains Mono',monospace;outline:none}.qrow input:focus{border-color:#39ff88}
+.gbtn{background:#39ff88;color:#04140a;border:0;border-radius:10px;padding:0 22px;font:700 14px 'JetBrains Mono',monospace;cursor:pointer;transition:.2s}.gbtn:hover{box-shadow:0 0 22px rgba(57,255,136,.5);transform:translateY(-2px)}
+.qerr{color:#ff7b72;font-size:13px;min-height:1.3em;margin:8px 0 0}
+.gcmd{margin:18px 0 0;color:#7ee787;font-size:14px}
+.gbar{height:8px;background:#121b24;border-radius:9px;overflow:hidden;margin:12px 0 0}.gbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#39ff88,#58a6ff);transition:width .3s}
+#gsay{font:700 clamp(22px,5.4vw,34px) 'JetBrains Mono',monospace;color:#39ff88;text-shadow:0 0 18px rgba(57,255,136,.6);letter-spacing:.05em;text-align:center;margin:18px 0 6px}
+.skip{display:block;text-align:right;margin-top:16px;color:#6b7c8c;font-size:12.5px;text-decoration:none}.skip:hover{color:#39ff88}
 </style>
 </head>
-<body>
+<body class="lock">
+<noscript><style>#gate{display:none}body.lock{overflow:auto}</style></noscript>
+<div id='gate' role='dialog' aria-modal='true' aria-labelledby='gt'><div class='strips' aria-hidden='true'><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><canvas id='gc' aria-hidden='true'></canvas>
+<div class='gbox' id='gbox'><div class='wh'><i></i><i></i><i></i><span>verify.py</span></div><div class='gb'>
+<pre class='gcode'><span class='cm'># security check before you enter</span>
+<span class='k'>def</span> <span class='f'>verify_human</span>(user)<span class='p'>:</span>
+    <span class='k'>return</span> user.<span class='f'>is_not_a_robot</span>()</pre>
+<p class='gh' id='gt'>Verify you are human</p>
+<button class='chk' id='chk' type='button'><span class='box'></span>I’m not a robot</button>
+<div class='glog' id='glog' aria-live='polite'></div>
+<div id='bld' hidden><p class='gcmd'>$ npm run build</p><div class='gbar'><i id='gbar'></i></div><p class='glog' id='bt'></p></div>
+<p id='gsay' hidden></p>
+<a href='#' class='skip' id='skip'>skip verification →</a>
+</div></div></div>
 <div id="bar"></div><div id="bg"></div><div class="blob b1"></div><div class="blob b2"></div><div id="spot"></div>
 <nav>
   <div class="dots"><button class="tl r" data-s="×" title="Close session" aria-label="Close session"></button><button class="tl y" data-s="−" title="Toggle focus mode" aria-label="Toggle focus mode"></button><button class="tl g" data-s="+" title="Toggle fullscreen" aria-label="Toggle fullscreen"></button></div>
@@ -446,7 +490,36 @@ async function hsh(){try{const d=new Uint8Array(await crypto.subtle.digest('SHA-
  if(prev){let n=0;for(let i=0;i<32;i++){let x=d[i]^prev[i];while(x){n+=x&1;x>>=1}}hd.textContent=n+' of 256 bits changed ('+Math.round(n/2.56)+'%)'}else hd.textContent='Change one letter and watch the whole hash change.';
  prev=d;ho.textContent=[...d].map(x=>x.toString(16).padStart(2,'0')).join('');ho.classList.remove('fx');void ho.offsetWidth;ho.classList.add('fx')}catch(e){ho.textContent='Hashing is not available in this view.'}}
 hi2.oninput=hsh;hsh();
+// Human verification gate
+(()=>{
+const gate=$('#gate');if(!gate)return;
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,lockEls=$$('body>main,body>nav,body>footer');lockEls.forEach(e=>e.inert=true);
+const sl=ms=>new Promise(r=>setTimeout(r,ms));
+const chk=$('#chk'),glog=$('#glog'),bld=$('#bld'),gsay=$('#gsay'),gbox=$('#gbox'),gc=$('#gc'),gx=gc.getContext('2d'),gbar=$('#gbar'),bt=$('#bt');
+let W,H,cols=[],parts=[],done=false;const chars='01{}<>/;=+*#$';
+const rs=()=>{W=gc.width=innerWidth;H=gc.height=innerHeight;cols=Array(Math.ceil(W/18)).fill(0).map(()=>Math.random()*-60)};addEventListener('resize',rs);rs();
+const loop=setInterval(()=>{gx.globalCompositeOperation='destination-out';gx.fillStyle='rgba(0,0,0,.12)';gx.fillRect(0,0,W,H);gx.globalCompositeOperation='source-over';
+ gx.font='15px JetBrains Mono,monospace';gx.fillStyle='#39ff88';
+ cols.forEach((y,i)=>{gx.fillText(chars[Math.random()*chars.length|0],i*18,y*18);cols[i]=y*18>H&&Math.random()>.975?0:y+1});
+ parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.12;p.l--;gx.globalAlpha=Math.max(p.l/60,0);gx.fillStyle=p.c;gx.font=p.s+'px JetBrains Mono,monospace';gx.fillText(p.t,p.x,p.y)});gx.globalAlpha=1;parts=parts.filter(p=>p.l>0)},45);
+const burst=()=>{gc.style.opacity=1;for(let i=0;i<110;i++){const a=Math.random()*6.283,sp=3+Math.random()*9;parts.push({x:W/2,y:H/2,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-3,l:60+Math.random()*30,t:'{}<>/;01#$=*'[Math.random()*12|0],c:['#39ff88','#58a6ff','#d2a8ff','#ffa657','#ff7b72'][Math.random()*5|0],s:14+Math.random()*16})}};
+const add=h=>{const p=document.createElement('p');p.innerHTML=h;glog.appendChild(p)};
+async function scr(el,text){const set='!<>-_/[]{}=+*^?#01';for(let f=0;f<=text.length*3;f++){el.textContent=text.split('').map((c,i)=>c===' '?' ':(i<f/3?c:set[Math.random()*set.length|0])).join('');await sl(30)}}
+function finish(){if(!gate.isConnected)return;document.body.classList.remove('lock');lockEls.forEach(e=>e.inert=false);clearInterval(loop);gate.remove();scrollTo(0,0)}
+async function reveal(){if(done)return;done=true;gbox.classList.add('out');gc.style.opacity=0;await sl(reduce?0:380);if(reduce)return finish();
+ $$('#gate .strips i').forEach((s,i)=>{s.style.transitionDelay=(i*70)+'ms';s.classList.add('up')});
+ document.body.classList.remove('lock');lockEls.forEach(e=>e.inert=false);await sl(1600);finish()}
+async function pass(){glog.innerHTML='';add(`<span class='ok'>✓ human verified</span>`);bld.hidden=false;
+ const steps=['compiling about.md','bundling projects.py','securing security.sh','tuning music.mp3','linking contact.sh'];
+ for(let i=0;i<steps.length;i++){bt.textContent=steps[i]+'...';gbar.style.width=((i+1)/steps.length*100)+'%';await sl(reduce?40:380)}
+ bt.textContent='build complete';gsay.hidden=false;await scr(gsay,'ACCESS GRANTED');burst();await sl(reduce?50:800);reveal()}
+chk.addEventListener('click',async()=>{if(chk.dataset.s)return;chk.dataset.s='1';chk.classList.add('busy');
+ for(const t of ['initialising challenge','checking user agent','measuring pointer entropy','scanning for headless browsers']){add('&gt; '+t+'...');await sl(reduce?60:380);glog.lastChild.innerHTML+=` <span class='ok'>ok</span>`}
+ chk.classList.remove('busy');chk.classList.add('ok');await sl(350);
+ await pass()});
+$('#skip').addEventListener('click',e=>{e.preventDefault();reveal()});
+chk.focus({preventScroll:true});
+})();
 </script>
 </body>
 </html>
-
